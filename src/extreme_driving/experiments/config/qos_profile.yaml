@@ -1,0 +1,9 @@
+/odom:
+  lifespan:
+    sec: 20
+/sensors/imu:
+  lifespan:
+    sec: 20
+/sensors/imu/raw:
+  lifespan:
+    sec: 20

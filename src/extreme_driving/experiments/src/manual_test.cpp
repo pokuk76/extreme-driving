@@ -104,6 +104,10 @@ class Interrupter : public rclcpp::Node
         publisher_ -> publish(rising);
     }
 
+    void timer_callback() {
+        
+    }
+
 	rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr publisher_;
     // rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr subscriber_;
 	
