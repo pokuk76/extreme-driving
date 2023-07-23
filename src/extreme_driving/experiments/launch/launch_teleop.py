@@ -69,10 +69,10 @@ def generate_launch_description():
         name='joy',
         parameters=[LaunchConfiguration('joy_config')]
     )
-    joy_teleop_node = Node(
+    joystick_teleop_node = Node(
         package='experiments',
         executable='joystick_teleop',
-        name='joy_teleop',
+        name='joystick_teleop',
         parameters=[LaunchConfiguration('joy_config')]
     )
     ackermann_to_vesc_node = Node(
@@ -116,7 +116,7 @@ def generate_launch_description():
     # finalize
     # ld.add_action(experiment_node)
     ld.add_action(joy_node)
-    ld.add_action(joy_teleop_node)
+    ld.add_action(joystick_teleop_node)
     ld.add_action(ackermann_to_vesc_node)
     ld.add_action(vesc_to_odom_node)
     ld.add_action(vesc_driver_node)

@@ -97,12 +97,12 @@ def generate_launch_description():
         name='joy',
         parameters=[LaunchConfiguration('joy_config')]
     )
-    joy_teleop_node = Node(
-        package='joy_teleop',
-        executable='joy_teleop',
-        name='joy_teleop',
-        parameters=[LaunchConfiguration('joy_config')]
-    )
+    # joystick_teleop_node = Node(
+    #     package='experiments',
+    #     executable='joystick_teleop',
+    #     name='joystick_teleop',
+    #     parameters=[LaunchConfiguration('joy_config')]
+    # )
     ackermann_to_vesc_node = Node(
         package='vesc_ackermann',
         executable='ackermann_to_vesc_node',
@@ -119,12 +119,6 @@ def generate_launch_description():
         package='vesc_driver',
         executable='vesc_driver_node',
         name='vesc_driver_node',
-        parameters=[LaunchConfiguration('vesc_config')]
-    )
-    throttle_interpolator_node = Node(
-        package='f1tenth_stack',
-        executable='throttle_interpolator',
-        name='throttle_interpolator',
         parameters=[LaunchConfiguration('vesc_config')]
     )
     urg_node = Node(
@@ -150,11 +144,10 @@ def generate_launch_description():
     # finalize
     ld.add_action(experiment_node)
     ld.add_action(joy_node)
-    ld.add_action(joy_teleop_node)
+    # ld.add_action(joystick_teleop_node)
     ld.add_action(ackermann_to_vesc_node)
     ld.add_action(vesc_to_odom_node)
     ld.add_action(vesc_driver_node)
-    ld.add_action(throttle_interpolator_node)
     # ld.add_action(urg_node)
     ld.add_action(ackermann_mux_node)
     ld.add_action(static_tf_node)

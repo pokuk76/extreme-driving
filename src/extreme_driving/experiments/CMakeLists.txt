@@ -17,6 +17,7 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+# find_package(ackermann_mux REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(ackermann_msgs REQUIRED)
@@ -44,8 +45,14 @@ ament_target_dependencies(experiment rclcpp std_msgs sensor_msgs ackermann_msgs 
 add_executable(joystick_teleop src/joystick_teleop.cpp)
 ament_target_dependencies(joystick_teleop rclcpp std_msgs sensor_msgs ackermann_msgs nav_msgs)
 
+
 install(TARGETS
   experiment
+  DESTINATION lib/${PROJECT_NAME})
+
+
+install(TARGETS
+  joystick_teleop
   DESTINATION lib/${PROJECT_NAME})
   
  
