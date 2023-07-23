@@ -37,7 +37,7 @@ struct interval_timer
     interval_timer();
 
     interval_timer(boost::asio::io_context& io, Clock::duration i, Callback cb) : interval(i), callback(cb), timer(io) {}
-interval
+
     void run()
     {
         timer.expires_from_now();
@@ -65,6 +65,7 @@ class ManualDrive : public rclcpp::Node
 	public:
         int interrupt_time, thread_count;
         double vk, steering_raw;
+        bool enableController;
         float t_delay_;
         boost::asio::io_context io;
 
@@ -110,7 +111,7 @@ class ManualDrive : public rclcpp::Node
 
 
             rising.data = thread_count;
-            publisher_ -> publish(rising);
+            misc_pub_->publish(rising);
         }
 
         
