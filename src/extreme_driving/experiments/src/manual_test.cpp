@@ -96,7 +96,7 @@ class ManualDrive : public rclcpp::Node
             // TODO: Change frequency back to 25ms once we integrate the LiDAR
             timer_ = this->create_wall_timer(1s, [this]{ timer_callback(); });
 
-            enableController = true;
+            enableController = false;
         }
 
 	private:
