@@ -69,15 +69,15 @@ class ManualDrive : public rclcpp::Node
         float t_delay_;
         boost::asio::io_context io;
 
-        interval_timer t {
-            io,
-            200000us,
-            [&]()
-            {
-                thread_count++;
-                return true;
-            }
-        };
+        // interval_timer t {
+        //     io,
+        //     200000us,
+        //     [&]()
+        //     {
+        //         thread_count++;
+        //         return true;
+        //     }
+        // };
         
         ManualDrive() : Node("ManualDrive") {
             declare_parameter("interrupt_time", 1000);
