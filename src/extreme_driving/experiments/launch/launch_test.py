@@ -72,7 +72,7 @@ def generate_launch_description():
                                 output='screen'
                             ),
                             ExecuteProcess(
-                                cmd=['ros2', 'bag', 'record', '-o', 'test_bags', '/odom' '/sensors/imu' '/sensors/imu/raw', '/odometry/filtered'],
+                                cmd=['ros2', 'bag', 'record', '-o', 'test_bags', '/odom', '/sensors/imu', '/sensors/imu/raw', '/odometry/filtered'],
                                 # cmd=['ros2', 'bag', 'record', '--qos-profile-overrides-path', '/home/f1tenth2/f1tenth_ws/src/extreme_driving/experiments/config/qos_profile.yaml', '-o', 'test_bags', '/odom' '/sensors/imu' '/sensors/imu/raw'],
                                 output='screen'
                             ),

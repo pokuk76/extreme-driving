@@ -69,15 +69,15 @@ class ManualDrive : public rclcpp::Node
         float t_delay_;
         boost::asio::io_context io;
 
-        // interval_timer t {
-        //     io,
-        //     200000us,
-        //     [&]()
-        //     {
-        //         thread_count++;
-        //         return true;
-        //     }
-        // };
+        interval_timer t {
+            io,
+            200000us,
+            [&]()
+            {
+                thread_count++;
+                return true;
+            }
+        };
         
         ManualDrive() : Node("ManualDrive") {
             declare_parameter("interrupt_time", 1000);
@@ -94,9 +94,9 @@ class ManualDrive : public rclcpp::Node
             drive_pub_ = this->create_publisher<ackermann_msgs::msg::AckermannDriveStamped>("/drive", 1);
 
             // TODO: Change frequency back to 25ms once we integrate the LiDAR
-            timer_ = this->create_wall_timer(1s, [this]{ timer_callback(); });
+            timer_ = this->create_wall_timer(25ms, [this]{ timer_callback(); });
 
-            enableController = false;
+            enableController = true;
         }
 
 	private:
