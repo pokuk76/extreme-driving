@@ -67,10 +67,17 @@ def generate_launch_description():
     # TODO: Test QoS overrides (hoping to use it to collect data for a set duration)
     ld = LaunchDescription([experiment_la, joy_la, vesc_la, sensors_la, mux_la,
                             ExecuteProcess(
-                                cmd=['ros2', 'bag', 'record', '-o', 'test_bags', '/odom' '/sensors/imu' '/sensors/imu/raw'],
+                                cmd=['ros2', 'bag', 'record', '-o', 'test_bags', '/odom' '/sensors/imu' '/sensors/imu/raw', '/odometry/filtered'],
                                 # cmd=['ros2', 'bag', 'record', '--qos-profile-overrides-path', '/home/f1tenth2/f1tenth_ws/src/extreme_driving/experiments/config/qos_profile.yaml', '-o', 'test_bags', '/odom' '/sensors/imu' '/sensors/imu/raw'],
                                 output='screen'
-                            )])
+                            ),
+                            Node(
+                                package='robot_localization',
+                                executable='ekf_node',
+                                name='ekf_filter_node',
+                                output='screen',
+                                parameters=[os.path.join(get_package_share_directory("robot_localization"), 'params', 'ekf.yaml')],
+                            ),])
 
 
     experiment_node = Node(
@@ -137,13 +144,13 @@ def generate_launch_description():
 
     # finalize
     ld.add_action(experiment_node)
-    # ld.add_action(joy_node)
-    # ld.add_action(joy_teleop_node)
+    ld.add_action(joy_node)
+    ld.add_action(joy_teleop_node)
     ld.add_action(ackermann_to_vesc_node)
     ld.add_action(vesc_to_odom_node)
     ld.add_action(vesc_driver_node)
     # ld.add_action(throttle_interpolator_node)
-    ld.add_action(urg_node)
+    # ld.add_action(urg_node)
     ld.add_action(ackermann_mux_node)
     ld.add_action(static_tf_node)
 
