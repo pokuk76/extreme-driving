@@ -41,6 +41,8 @@ include_directories(/usr/local/include/eigen-3.4.0/)
 add_executable(experiment src/manual_test.cpp)
 ament_target_dependencies(experiment rclcpp std_msgs sensor_msgs ackermann_msgs nav_msgs)
 
+add_executable(joystick_teleop src/joystick_teleop.cpp)
+ament_target_dependencies(joystick_teleop rclcpp std_msgs sensor_msgs ackermann_msgs nav_msgs)
 
 install(TARGETS
   experiment
