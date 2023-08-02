@@ -13,7 +13,11 @@ import os
 
 def generate_launch_description():
     ## exteme_driving project
-    
+    experiment_config = os.path.join(
+        get_package_share_directory('experiments'),
+        'config',
+        'experiment.yaml'
+    )   
 
     ## f1tenth_system project
     joy_teleop_config = os.path.join(
@@ -37,11 +41,11 @@ def generate_launch_description():
         'mux.yaml'
     )
 
-    # experiment_la = DeclareLaunchArgument(
-    #     'experiment_config',
-    #     default_value=experiment_config,
-    #     description='experiment node launch argument'
-    # )
+    experiment_la = DeclareLaunchArgument(
+        'experiment_config',
+        default_value=experiment_config,
+        description='experiment node launch argument'
+    )
     joy_la = DeclareLaunchArgument(
         'joy_config',
         default_value=joy_teleop_config,
@@ -61,7 +65,7 @@ def generate_launch_description():
 
     ## ExecuteProcess is being used to automatically start rosbag collection
     # TODO: Test QoS overrides (hoping to use it to collect data for a set duration)
-    ld = LaunchDescription([joy_la, vesc_la, sensors_la, mux_la,
+    ld = LaunchDescription([experiment_la, joy_la, vesc_la, sensors_la, mux_la,
                             # Delete old test_bags/
                             ExecuteProcess(
                                 cmd=['rm', '-rf', 'test_bags/'],
@@ -79,6 +83,12 @@ def generate_launch_description():
                                 output='screen',
                                 parameters=[os.path.join(get_package_share_directory("experiments"), 'config', 'ekf.yaml')],
                             ),])
+    experiment_node = Node(
+        package='experiments',
+        executable='experiment',
+        name='experiments',
+        parameters=[LaunchConfiguration('experiment_config')]
+    )
 
     joy_node = Node(
         package='joy',
@@ -123,34 +133,15 @@ def generate_launch_description():
         parameters=[LaunchConfiguration('mux_config')],
         remappings=[('ackermann_cmd_out', 'ackermann_drive')]
     )
-    # static_tf_node = Node(
-    #     package='tf2_ros',
-    #     executable='static_transform_publisher',
-    #     name='static_baselink_to_laser',
-    #     arguments=['0.27', '0.0', '0.11', '0.0', '0.0', '0.0', 'base_link', 'laser']
-    # )
-
-    # static_tf_node = Node(
-    #     package='tf2_ros',
-    #     executable='static_transform_publisher',
-    #     name='static_baselink_to_laser',
-    #     arguments=['0.075', '0.0', '0.110', '0.0', '0.0', '0.0', 'base_link', 'imu_frame']
-    # )
-
-    tf_publisher_node = Node(
-        package='experiments',
-        executable='tf_publish',
-        name='tf_publisher'
+    static_tf_node = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_baselink_to_laser',
+        arguments=['0.27', '0.0', '0.11', '0.0', '0.0', '0.0', 'base_link', 'laser']
     )
 
-    # tf_publisher_node = Node(
-    #     package='f1tenth_stack',
-    #     executable='tf_publisher',
-    #     name='f1tenth_tf_publisher'
-    # )
-
     # finalize
-    # ld.add_action(experiment_node)
+    ld.add_action(experiment_node)
     ld.add_action(joy_node)
     ld.add_action(joystick_teleop_node)
     ld.add_action(ackermann_to_vesc_node)
@@ -159,7 +150,6 @@ def generate_launch_description():
     # ld.add_action(throttle_interpolator_node)
     # ld.add_action(urg_node)
     ld.add_action(ackermann_mux_node)
-    #ld.add_action(static_tf_node)
-    ld.add_action(tf_publisher_node)
+    ld.add_action(static_tf_node)
 
     return ld

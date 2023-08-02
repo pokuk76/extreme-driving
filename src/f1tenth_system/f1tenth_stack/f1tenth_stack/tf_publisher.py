@@ -38,6 +38,19 @@ class FramePublisher(Node):
         t2.transform.rotation.w = 1.0
         self.br.sendTransform(t2)
 
+        t3 = TransformStamped()
+        t3.header.stamp = self.get_clock().now().to_msg()
+        t3.header.frame_id = 'base_link'
+        t3.child_frame_id = 'imu_frame'
+        t3.transform.translation.x = 0.075
+        t3.transform.translation.y = 0.0
+        t3.transform.translation.z = 0.110
+        t3.transform.rotation.x = 0.0
+        t3.transform.rotation.y = 0.0
+        t3.transform.rotation.z = 0.0
+        t3.transform.rotation.w = 1.0
+        self.br.sendTransform(t3)
+
 
 def main():
     rclpy.init()

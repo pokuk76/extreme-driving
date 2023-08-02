@@ -45,14 +45,19 @@ ament_target_dependencies(experiment rclcpp std_msgs sensor_msgs ackermann_msgs 
 add_executable(joystick_teleop src/joystick_teleop.cpp)
 ament_target_dependencies(joystick_teleop rclcpp std_msgs sensor_msgs ackermann_msgs nav_msgs)
 
+add_executable(tf_publish src/tf_publisher.cpp)
+ament_target_dependencies(tf_publish rclcpp nav_msgs tf2_ros geometry_msgs)
+
 
 install(TARGETS
   experiment
+  tf_publish
   DESTINATION lib/${PROJECT_NAME})
 
 
 install(TARGETS
   joystick_teleop
+  tf_publish
   DESTINATION lib/${PROJECT_NAME})
   
  
