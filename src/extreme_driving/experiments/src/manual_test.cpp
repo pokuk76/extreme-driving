@@ -115,7 +115,7 @@ class ManualDrive : public rclcpp::Node
             auto drive_msg = ackermann_msgs::msg::AckermannDriveStamped();
             drive_msg.drive.steering_angle = 0.50*axs.at(0);
             drive_msg.drive.speed = (2.25*(axs.at(2) - axs.at(5)))/2; 
-            publisher_->publish(drive_msg);
+            ackermann_publisher->publish(drive_msg);
         }
         
         void process_joystick(const sensor_msgs::msg::Joy::SharedPtr joy_in)
@@ -146,7 +146,7 @@ class ManualDrive : public rclcpp::Node
         }
 
 	rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr misc_pub;
-    // rclcpp::Publisher<ackermann_msgs::msg::AckermannDriveStamped>::SharedPtr drive_pub_;
+    rclcpp::Publisher<ackermann_msgs::msg::AckermannDriveStamped>::SharedPtr drive_pub_;
 
     rclcpp::Publisher<ackermann_msgs::msg::AckermannDriveStamped>::SharedPtr ackermann_publisher;
 	rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joystick_subscription;

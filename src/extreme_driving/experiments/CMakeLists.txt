@@ -39,8 +39,8 @@ endif()
 include_directories(include)
 include_directories(/usr/local/include/eigen-3.4.0/)
 
-add_executable(experiment src/manual_test.cpp)
-ament_target_dependencies(experiment rclcpp std_msgs sensor_msgs ackermann_msgs nav_msgs)
+# add_executable(experiment src/manual_test.cpp)
+# ament_target_dependencies(experiment rclcpp std_msgs sensor_msgs ackermann_msgs nav_msgs)
 
 add_executable(joystick_teleop src/joystick_teleop.cpp)
 ament_target_dependencies(joystick_teleop rclcpp std_msgs sensor_msgs ackermann_msgs nav_msgs)
@@ -49,10 +49,10 @@ add_executable(tf_publish src/tf_publisher.cpp)
 ament_target_dependencies(tf_publish rclcpp nav_msgs tf2_ros geometry_msgs)
 
 
-install(TARGETS
-  experiment
-  tf_publish
-  DESTINATION lib/${PROJECT_NAME})
+# install(TARGETS
+#   experiment
+#   tf_publish
+#   DESTINATION lib/${PROJECT_NAME})
 
 
 install(TARGETS
