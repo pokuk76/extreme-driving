@@ -142,12 +142,17 @@ def generate_launch_description():
         executable='tf_publish',
         name='tf_publisher'
     )
-
     # tf_publisher_node = Node(
     #     package='f1tenth_stack',
     #     executable='tf_publisher',
     #     name='f1tenth_tf_publisher'
     # )
+
+    imu_node = Node(
+        package='external_imu',
+        executable='imu_node_test',
+        name='imu_node_test'
+    )
 
     # finalize
     # ld.add_action(experiment_node)
@@ -161,5 +166,6 @@ def generate_launch_description():
     ld.add_action(ackermann_mux_node)
     #ld.add_action(static_tf_node)
     ld.add_action(tf_publisher_node)
+    ld.add_action(imu_node)
 
     return ld
